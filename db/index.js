@@ -1,16 +1,24 @@
-var mysql = require('mysql');
-var db=mysql.createConnection({
-	host:'localhost',
-	user:'root',
-	password:'123456',
-	database:'mytest',
-	port:3306
+'use strict';
+
+import mongoose from 'mongoose';
+var DB_CONN_STR = 'mongodb://localhost:27017/jotest'; 
+mongoose.connect(DB_CONN_STR, {useMongoClient:true});
+mongoose.Promise = global.Promise;
+
+const db = mongoose.connection;
+
+db.once('open' ,() => {
+	console.log('连接数据库成功')
+})
+
+db.on('error', function(error) {
+    console.error('Error in MongoDb connection: ' + error);
+    mongoose.disconnect();
 });
-db.connect((err)=>{
-	if(err){
-		console.log('connect fail')
-	}else{
-		console.log('connect suc')
-	}
+
+db.on('close', function() {
+    console.log('数据库断开，重新连接数据库');
+    mongoose.connect(DB_CONN_STR, {server:{auto_reconnect:true}});
 });
+
 export default db;

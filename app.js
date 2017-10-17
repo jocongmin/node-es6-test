@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var session = require('express-session');
+import db from './db/index.js'
+import connectMongo from 'connect-mongo';
 import routes from "./routes/index.js"
 app.use(session({
 	secret: 'shixinke',

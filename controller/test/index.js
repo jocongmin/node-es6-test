@@ -1,13 +1,16 @@
 'use strict';
-import testModle from "../../models/test.js"
+import Admin from "../../models/test.js"
+const admin=new Admin
 
 class TestCls {
 	constructor() {}
 	async sendTemp(req, res, next) {
-		var data = await testModle.qryMytable();
-		res.render('test', {
-			data: data,
-		});
+		var data=await Admin.findit('jocongmin')
+		console.log(data)
+	}
+	async sendData(req,res,next){
+		var data=await admin.insertit('jothree')
+		console.log(data)
 	}
 }
 
